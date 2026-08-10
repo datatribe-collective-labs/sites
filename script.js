@@ -94,3 +94,33 @@ document.addEventListener('DOMContentLoaded', function () {
   // .partners-track { display:flex; transition: transform 0.6s ease; }
   startLoop();
 });
+//meet up update
+// ====================================
+// UPDATE THIS BLOCK FOR EACH NEW MEETUP
+// ====================================
+const upcomingEvent = {
+  title: "DataTribe Meetup #8 - Data Engineering and AI",
+  date: "Thu, Aug 27, 2026 · 18:00–20:30",
+  address: "Brightly Helsinki Office, Pohjoisesplanadi 37 A, 00100 Helsinki",
+  eventUrl: "https://www.meetup.com/datatribe-meetup-group/events/315956999/"
+};
+// ====================================
+document.getElementById("ribbon-event-title").textContent = upcomingEvent.title;
+document.getElementById("ribbon-event-link").href = upcomingEvent.eventUrl;
+document.getElementById("meetup-title").textContent = upcomingEvent.title;
+document.getElementById("meetup-time").textContent = `📅 ${upcomingEvent.date}`;
+document.getElementById("meetup-address").textContent = `📍 ${upcomingEvent.address}`;
+document.getElementById("meetup-link").href = upcomingEvent.eventUrl;
+document.getElementById("meetup-map-frame").src =
+  `https://maps.google.com/maps?q=${encodeURIComponent(upcomingEvent.address)}&output=embed`;
+// Position the ribbon below the header
+function positionRibbon() {
+  const header = document.querySelector("header");
+  const ribbon = document.getElementById("event-ribbon");
+  if (header && ribbon) {
+    ribbon.style.top = `${header.offsetHeight}px`;
+  }
+}
+
+positionRibbon();
+window.addEventListener("resize", positionRibbon);
