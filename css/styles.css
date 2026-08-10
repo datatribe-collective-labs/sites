@@ -1342,3 +1342,36 @@ footer svg {
         flex-direction: column;
     }
 }
+
+/* ============================= */
+/* Event ribbon*/
+/* ============================= */
+.event-ribbon {
+    background: var(--accent);
+    color: #F5F5F5;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    animation: ribbon-flash 2s ease-in-out infinite;
+    position: sticky;
+    z-index: 9;   /* one less than header's z-index: 10 */
+}
+
+.ribbon-text a {
+    color: #F5F5F5;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+@keyframes ribbon-flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@media (max-width: 480px) {
+    .event-ribbon {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
