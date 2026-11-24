@@ -99,20 +99,31 @@ document.addEventListener('DOMContentLoaded', function () {
 // UPDATE THIS BLOCK FOR EACH NEW MEETUP
 // ====================================
 const upcomingEvent = {
-  title: "DataTribe Meetup #8 - Data Engineering and AI",
-  date: "Thu, Aug 27, 2026 · 18:00–20:30",
-  address: "Brightly Helsinki Office, Pohjoisesplanadi 37 A, 00100 Helsinki",
-  eventUrl: "https://www.meetup.com/datatribe-meetup-group/events/315956999/"
+  title: "Data & AI Exchange: Helsinki",
+  date: "Thu, Dec 3, 2026 · 17:00–19:30",
+  address: "Innovation Home Kamppi, Kansakoulukatu 3, 00100 Helsinki",
+  eventUrl: "https://www.meetup.com/datatribe-meetup-group/events/317284529/"
 };
 // ====================================
-document.getElementById("ribbon-event-title").textContent = upcomingEvent.title;
-document.getElementById("ribbon-event-link").href = upcomingEvent.eventUrl;
-document.getElementById("meetup-title").textContent = upcomingEvent.title;
-document.getElementById("meetup-time").textContent = `📅 ${upcomingEvent.date}`;
-document.getElementById("meetup-address").textContent = `📍 ${upcomingEvent.address}`;
-document.getElementById("meetup-link").href = upcomingEvent.eventUrl;
-document.getElementById("meetup-map-frame").src =
-  `https://maps.google.com/maps?q=${encodeURIComponent(upcomingEvent.address)}&output=embed`;
+// Only the ribbon exists on every page; the meetup card is on events.html only.
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function setAttr(id, attr, value) {
+  const el = document.getElementById(id);
+  if (el) el.setAttribute(attr, value);
+}
+
+setText("ribbon-event-title", upcomingEvent.title);
+setAttr("ribbon-event-link", "href", upcomingEvent.eventUrl);
+setText("meetup-title", upcomingEvent.title);
+setText("meetup-time", `📅 ${upcomingEvent.date}`);
+setText("meetup-address", `📍 ${upcomingEvent.address}`);
+setAttr("meetup-link", "href", upcomingEvent.eventUrl);
+setAttr("meetup-map-frame", "src",
+  `https://maps.google.com/maps?q=${encodeURIComponent(upcomingEvent.address)}&output=embed`);
 // Position the ribbon below the header
 function positionRibbon() {
   const header = document.querySelector("header");
