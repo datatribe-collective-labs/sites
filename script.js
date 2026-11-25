@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //meet up update
 // ====================================
 // UPDATE THIS BLOCK FOR EACH NEW MEETUP
-// Set it to null between events: the page then shows the
-// "Currently no scheduled events" section instead of the card.
+// Set it to null between events: the ribbon and the meetup card are
+// then hidden, leaving nothing in their place.
 // ====================================
 const upcomingEvent = {
   title: "Data & AI Exchange: Helsinki",
@@ -107,8 +107,8 @@ const upcomingEvent = {
   eventUrl: "https://www.meetup.com/datatribe-meetup-group/events/317284529/"
 };
 // ====================================
-// Only the ribbon exists on every page; the meetup card and the
-// "no scheduled events" section are on events.html only.
+// Only the ribbon exists on every page; the meetup card is on
+// events.html only.
 function setText(id, text) {
   const el = document.getElementById(id);
   if (el) el.textContent = text;
@@ -125,11 +125,8 @@ function setShown(id, shown) {
 }
 
 function renderEvent(event) {
-  // events.html carries two blocks: the meetup card for a real event and a
-  // "Currently no scheduled events" section. Only one may ever be visible.
   setShown("event-ribbon", Boolean(event));
   setShown("upcoming-meetup", Boolean(event));
-  setShown("no-upcoming-events", !event);
 
   if (!event) return;
 
