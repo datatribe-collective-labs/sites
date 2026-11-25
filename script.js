@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //meet up update
 // ====================================
 // UPDATE THIS BLOCK FOR EACH NEW MEETUP
+// Set it to null between events: the page then shows the
+// "Currently no scheduled events" section instead of the card.
 // ====================================
 const upcomingEvent = {
   title: "Data & AI Exchange: Helsinki",
@@ -105,7 +107,8 @@ const upcomingEvent = {
   eventUrl: "https://www.meetup.com/datatribe-meetup-group/events/317284529/"
 };
 // ====================================
-// Only the ribbon exists on every page; the meetup card is on events.html only.
+// Only the ribbon exists on every page; the meetup card and the
+// "no scheduled events" section are on events.html only.
 function setText(id, text) {
   const el = document.getElementById(id);
   if (el) el.textContent = text;
@@ -116,14 +119,31 @@ function setAttr(id, attr, value) {
   if (el) el.setAttribute(attr, value);
 }
 
-setText("ribbon-event-title", upcomingEvent.title);
-setAttr("ribbon-event-link", "href", upcomingEvent.eventUrl);
-setText("meetup-title", upcomingEvent.title);
-setText("meetup-time", `📅 ${upcomingEvent.date}`);
-setText("meetup-address", `📍 ${upcomingEvent.address}`);
-setAttr("meetup-link", "href", upcomingEvent.eventUrl);
-setAttr("meetup-map-frame", "src",
-  `https://maps.google.com/maps?q=${encodeURIComponent(upcomingEvent.address)}&output=embed`);
+function setShown(id, shown) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = shown ? "" : "none";
+}
+
+function renderEvent(event) {
+  // events.html carries two blocks: the meetup card for a real event and a
+  // "Currently no scheduled events" section. Only one may ever be visible.
+  setShown("event-ribbon", Boolean(event));
+  setShown("upcoming-meetup", Boolean(event));
+  setShown("no-upcoming-events", !event);
+
+  if (!event) return;
+
+  setText("ribbon-event-title", event.title);
+  setAttr("ribbon-event-link", "href", event.eventUrl);
+  setText("meetup-title", event.title);
+  setText("meetup-time", `📅 ${event.date}`);
+  setText("meetup-address", `📍 ${event.address}`);
+  setAttr("meetup-link", "href", event.eventUrl);
+  setAttr("meetup-map-frame", "src",
+    `https://maps.google.com/maps?q=${encodeURIComponent(event.address)}&output=embed`);
+}
+
+renderEvent(upcomingEvent);
 // Position the ribbon below the header
 function positionRibbon() {
   const header = document.querySelector("header");
